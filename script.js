@@ -23,10 +23,16 @@ const gameController = (function (){
 
     const getActivePlayer = () => activePlayer;
 
-    // const printNewRound !!
-
     function startGame(){
+        const board = gameBoardModule.gameBoard;
 
+        for (let row = 0; row< board.length;row++){
+            for (let col = 0;col< board[row].length;col++){
+                board[row][col] = undefined;
+            }
+        }
+
+        activePlayer = plauyers 
     }
 
 
