@@ -23,27 +23,23 @@ const gameController = (function (){
 
     const getActivePlayer = () => activePlayer;
 
+    let gameOver = false;
     function startGame(){
-        const board = gameBoardModule.gameBoard;
-
+        gameOver = false;
         for (let row = 0; row< board.length;row++){
             for (let col = 0;col< board[row].length;col++){
                 board[row][col] = undefined;
             }
         }
-
-        activePlayer = plauyers 
+        
+        return `Game Started. Player 1's turn`;
     }
 
-
-    let gameOver = false;
     function playMove(row, column){
         if (gameOver) {
             console.log("Game is already over.");
             return;
         }
-
-        const board = gameBoardModule.gameBoard;
 
         if (board[row][column] !== undefined){
             console.log("Invalid move: Cell Already Occupied");
@@ -52,31 +48,33 @@ const gameController = (function (){
 
         board[row][column] = activePlayer.marker;
 
-        const result = checkWinner(row, col);
+        const result = checkWinner(row, column);
         if (result !== null){
             gameOver = true;
             console.log(`${activePlayer.name} wins!`);
+            return;
         }
 
-
+        if (checkTie()){
+            gameOver = true;
+            console.log("It's a tie!");
+            return;
+        }
+    
         switchPlayerTurn();
 
     }
 
     function checkRowWin(rowIndex){
-        const board = gameBoardModule.gameBoard;
-        const row = board[rowIndex];
 
-        if (row[rowIndex][0] && row[rowIndex][0] === row[rowIndex][1] && row[rowIndex][0] === row[rowIndex][2]){
-            return row[rowIndex][0];
+        if (board[rowIndex][0] && board[rowIndex][0] === board[rowIndex][1] && board[rowIndex][0] === board[rowIndex][2]){
+            return board[rowIndex][0];
         }
         return null;
     }
 
 
     function checkColumnWin(colIndex){
-        const board = gameBoardModule.gameBoard;
-
         if (board[0][colIndex] && board[0][colIndex] === board[1][colIndex] && board[0][colIndex] === board[2][colIndex]){
             return board[0][colIndex];
         }
@@ -84,9 +82,7 @@ const gameController = (function (){
     }
 
 
-    function checkDiagonalWin(rowIndex){
-        const board = gameBoardModule.gameBoard;
-
+    function checkDiagonalWin(rowIndex, colIn){
         if (board[0][0] && board[0][0] === board[1][1] && board[0][0] === board[2][2]){
             return board[0][0];
         }
@@ -112,5 +108,17 @@ const gameController = (function (){
 
         return null;
     }
-    return {startGame, playMove};
+
+function checkTie(){
+    for (let row = 0; row<board.length; row++){
+        for (let col = 0;col< board[row].length; col++){
+            if (board[row][col] === undefined){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+    return {startGame, playMove, getActivePlayer};
 })();
