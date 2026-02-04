@@ -3,36 +3,52 @@ const gameBoardModule = (function () {
     return {gameBoard};
 })();
 
-function playerFactory (name){
-    const marker = "@" + name;
-    return {name, marker}
+function playerFactory (name, marker){
+    return {name, marker};
 }
+
+
+const submitButton = document.querySelector("#startGame");
+submitButton.addEventListener("click", (event) => {
+    const player1Name = document.querySelector("#player1NameInput").value;
+    const player2Name = document.querySelector("#player2NameInput").value; 
+
+    gameController.startGame(player1Name, player2Name);
+});
 
 const gameController = (function (){
     const board = gameBoardModule.gameBoard;
-    const player1 = playerFactory("player1");
-    const player2 = playerFactory("player2");
+    let players = [];
 
-    const players = [player1, player2];
-
-    let activePlayer = players[0];
-
+    
+    let activePlayer = null;
+    let gameOver = false;
     const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0]? players[1]: players[0];
     };
 
     const getActivePlayer = () => activePlayer;
 
-    let gameOver = false;
-    function startGame(){
+    function startGame(player1Name, player2Name){
+        players = [];
+        const player1 = playerFactory(player1Name, "X");
+        const player2 = playerFactory(player2Name, "0");
+        players.push(player1, player2);
+        
+        activePlayer = players[0];
         gameOver = false;
+
+        // Clear the board.
         for (let row = 0; row< board.length;row++){
             for (let col = 0;col< board[row].length;col++){
                 board[row][col] = undefined;
             }
         }
         
-        return `Game Started. Player 1's turn`;
+        const textBox = document.querySelector("#textBox");
+        const content = document.createElement("h3");
+        content.innerText = `Game Started, ${player1Name} turn!`
+        textBox.appendChild(content);
     }
 
     function playMove(row, column){
@@ -122,3 +138,12 @@ function checkTie(){
 
     return {startGame, playMove, getActivePlayer};
 })();
+
+function displayController(){
+    
+}
+
+
+
+// Form Handling
+
