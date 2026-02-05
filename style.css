@@ -16,3 +16,25 @@ button {
 button:hover{
     color: red;
 }
+
+.board{
+    width: 500px;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.cell{
+    border: 2px solid black;
+    border-top: 0;
+    border-left: 0;
+    height: 100px;
+    margin: 0;
+}
+
+.cell:nth-child(3n){
+    border-right: 0;
+}
+
+.cell:nth-last-child(-n+3){
+    border-bottom: 0;
+}

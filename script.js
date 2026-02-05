@@ -52,7 +52,7 @@ const gameController = (function (){
     }
 
     function playMove(row, column){
-        if (gameOver) {
+        if (gameOver){
             console.log("Game is already over.");
             return;
         }
