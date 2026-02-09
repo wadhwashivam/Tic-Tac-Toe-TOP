@@ -38,3 +38,8 @@ button:hover{
 .cell:nth-last-child(-n+3){
     border-bottom: 0;
 }
+
+.cellDecoration {
+    font-size: 50px;
+    text-align: center;
+}
