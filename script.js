@@ -37,6 +37,11 @@ const gameController = (function (){
         
         activePlayer = players[0];
         gameOver = false;
+       
+        const textBox = document.querySelector("#textBox");
+        const content = document.createElement("h3");
+        content.innerText = `Game Started, ${player1Name} turn!`
+        textBox.appendChild(content);
 
         // Clear the board.
         for (let row = 0; row< board.length;row++){
@@ -44,11 +49,6 @@ const gameController = (function (){
                 board[row][col] = undefined;
             }
         }
-        
-        const textBox = document.querySelector("#textBox");
-        const content = document.createElement("h3");
-        content.innerText = `Game Started, ${player1Name} turn!`
-        textBox.appendChild(content);
     }
 
     const gameOverBox = document.querySelector("#gameOverBox");
@@ -200,7 +200,7 @@ const displayController = function () {
         const textBox = document.querySelector("#textBox");
         textBox.innerText = "";
 
-        const gameOverBox = document.querySelector("gameOverBox");
+        const gameOverBox = document.querySelector("#gameOverBox");
         gameOverBox.innerText = "";
     }
 
